@@ -11,7 +11,7 @@ app.post("/events", async(req, res) => {
     if (type === "CommentCreated") {
         const status = data.content.includes("orange") ? "rejected" : "approved"; //burda kullanıncın bir istek atmasınıda saglayablırsın patch ile bunu user feature'da yaparız ordan gine  http://localhost:4005/events 'e ıstek atarız sımdılık böyle
 
-        await axios.post("http://localhost:4005/events", {
+        await axios.post("http://event-bus-clusterip-srv:4005/events", {
             type: "CommentModerated",
             data: {
                 id: data.id,

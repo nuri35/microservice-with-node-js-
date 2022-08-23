@@ -9,5 +9,5 @@ spec:
   ports:
     - name: posts
       protocol: TCP
-      port: 4000
+      port: 4000 #cluster ıcınden mesela blabla:4000 vs seklınde buraya baglandıgında işte burda port 4000'den dolayı oluyor buda target port'a yonlendırıyor yanı uygulamanın portuna
       targetPort: 4000

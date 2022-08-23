@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: posts
-          image: stephengrider/posts #  gine bu dosyada bır degısıklık gorurgormez en guncel olarak uzak repodan ceker  ayrıca 0.0.5 seklınde surum belırtmeyı cok yapmamaya calıs  stephengrider/posts bu sekılde latest tag kulllanmanı saglar. uzaktakı repodakı en son degısıklıgı alabılmek ıcın apply -f seklınde yaparsak dıcekkı yaml dosyanda bu degısıklık yok ben yapmam dıcek. dolayısıyla şu komutu kullan.
+          image: nurettinsenbackend/posts #  gine bu dosyada bır degısıklık gorurgormez en guncel olarak uzak repodan ceker  ayrıca 0.0.5 seklınde surum belırtmeyı cok yapmamaya calıs  stephengrider/posts bu sekılde latest tag kulllanmanı saglar. uzaktakı repodakı en son degısıklıgı alabılmek ıcın apply -f seklınde yaparsak dıcekkı yaml dosyanda bu degısıklık yok ben yapmam dıcek. dolayısıyla şu komutu kullan.
           # kubectl rollout restart deployment post-depl
 
 # her bir deployment objemız ıcın birbirleriyle konusması ıcın kendılerıne aıt clusterIp servisi yaratalım

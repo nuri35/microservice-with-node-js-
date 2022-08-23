@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: event-bus
-          image: stephengrider/event-bus
+          image: nurettinsenbackend/event-bus
 
 #ayrı bır service dosyası olusturmak yerıne buraya da böyle yazaıblrız burdada app: event-bus selector'a dıkkat et
 ---
