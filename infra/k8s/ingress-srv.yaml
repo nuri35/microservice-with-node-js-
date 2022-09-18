@@ -4,17 +4,39 @@ metadata:
   name: ingress-srv
   annotations:
     kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/use-regex: "true" #aşagıda path kısmında regex kullanabılmek ıcın yazıyoruz
 
 spec:
   rules:
     - host: posts.com
       http:
         paths:
-          - path: /posts
+          - path: /posts/create #sadece route'lar uzerınden anlayıp gıdıyor get vs anlamaz /posts dedıgımızde post'ları getırsın yanı query pod'una gıtmesını ıstıcez onun clusterIpsını vericez posts/create dedıgımızde posts pod'una gıdecek ozman posts clusterIp sı yazıcaz  posts-clusterip-srv seklınde kı clusterımız ıcıersınde react ıle podlar konusabılsın
             pathType: Prefix
             backend:
               service:
                 name: posts-clusterip-srv
                 port:
                   number: 4000
-
+          - path: /posts
+            pathType: Prefix
+            backend:
+              service:
+                name: query-clusterip-srv
+                port:
+                  number: 4002
+          - path: /posts/?(.*)/comments
+            pathType: Prefix
+            backend:
+              service:
+                name: comments-clusterip-srv
+                port:
+                  number: 4001
+          - path: /?(.*) # rect uygulamamızında react router vs de kullandıgımız ıcın başka url'yede gdebılıyor onun ııcn regex kullandık böylece herzaman react uygulamamızı gostrmeye calısacaktır genelde react kısmını en aşagıda yaz böyle bir path yazacaksanız bile. çünkü ilk oncce verılen url burada yukardakılerle eşleşmeye calıstıktan sonra olmassa en aşagıdakıyle eşleşecektir. zaten yukardaki verılen endpointlerde react da axıos ile istek yolladıgımız url'ler eger react'ı en yukarıya koyarsak asında belkı post srv'ye gıdecekken en yukarda react oldugu ıcın bu sefer ona gıdecektır. buda istedigimiz birşey degıldır.
+            pathType: Prefix
+            backend:
+              service:
+                name: client-clusterip-srv
+                port:
+                  number: 3000
+#bu sıralama en onemlıden en aza dogru sıralanmıştır.
