@@ -4,10 +4,10 @@ metadata:
   name: posts-depl
 spec:
   replicas: 1
-  selector:
+  selector: #sayesinde olusuturlan podlara göz atıyor app:posts key value'suna sahıpleri bulup onları deployment olarak yonetiyor.
     matchLabels:
       app: posts
-  template:
+  template: #burada ise deploymentın olsutmrasını istedigimiz bir podun tam yapılandırmasını  belırttıgımız sablon yer alır yanı aslında burası pod'a key value'yu app:posts'tu atıyor. yani pod'un app:posts etıketıne sahıp olmasını ıstedıgımızı soyluyoruz
     metadata:
       labels:
         app: posts
@@ -15,7 +15,7 @@ spec:
       containers:
         - name: posts
           image: nurettinsenbackend/posts #  gine bu dosyada bır degısıklık gorurgormez en guncel olarak uzak repodan ceker  ayrıca 0.0.5 seklınde surum belırtmeyı cok yapmamaya calıs  stephengrider/posts bu sekılde latest tag kulllanmanı saglar. uzaktakı repodakı en son degısıklıgı alabılmek ıcın apply -f seklınde yaparsak dıcekkı yaml dosyanda bu degısıklık yok ben yapmam dıcek. dolayısıyla şu komutu kullan.
-          # kubectl rollout restart deployment post-depl
+          # kubectl rollout restart deployment post-depl bunu neden kullanırız bız zaten deployment objesı kullanıyoruz onun ıcın bu komut daha saglıklı apply -f demek yerıne bu mantıklı yanı en sonda rollout da kullanmayıp skaffold kullandık.
 
 # her bir deployment objemız ıcın birbirleriyle konusması ıcın kendılerıne aıt clusterIp servisi yaratalım
 ---
@@ -25,7 +25,7 @@ metadata:
   name: posts-clusterip-srv
 spec:
   selector:
-    app: posts
+    app: posts    # key valuesu app post olan poda ait oluyor clusterIp
   ports:
     - name: posts
       protocol: TCP

@@ -1,13 +1,25 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: posts-srv
+  name: client-srv
 spec:
   type: NodePort
   selector:
-    app: posts
+    app: client
   ports:
-    - name: posts
+    - name: client
       protocol: TCP
-      port: 4000 #cluster ıcınden mesela blabla:4000 vs seklınde buraya baglandıgında işte burda port 4000'den dolayı oluyor buda target port'a yonlendırıyor yanı uygulamanın portuna
-      targetPort: 4000 #uygulamanın calıstıgı porttur. buraya yonlendırır porttan targetporta...Okey
+      port: 3000 #istersen burayı 2000 yap kubectl get services dersen  2000:32482/TCP  seklınde gosterır ama port ve targetport farklı olma senaryoları genelde yoktur genelde ıkısıde aynı olsun ayrıca dısardan 32482 dıyerek ulasıyoz vıdeoda hocanın ama aslında 3000'e gidiyor yanı gınede dısardan port denılen 3000^'e ulasıyoz'  3000:32482/TCP diyor çünkü. buda yanı demekkı dışardan 3000'den ulaşıp target port'a gidiyoz yanı 3000:3000 gibi oluyor. port-forward 'daki' gibi
+      targetPort: 3000 #uygulamanın calıstıgı porttur. buraya yonlendırır porttan targetporta...Okey
+
+#şimdi içinde kubernete cluster calısan contanierın  container ip sine baktım minikube ip dedııgmle aynı  çok normal zaten minikube ip deıdgımde o makınanın ipsini verecektır. oda container dedıgımız sanal mkına zaten okeyyy.... peki neden 192.168.49.2:32616 dedıgımızde yanı oda zaten direk 3000'maplenmış oldugu ıcın dolaylı yoldan bız dışardan 3000 portuna ulasıyoz oda 3000:3000 gibi davranıyor 3000 de kı uygulamaya gıder zaten  tabı selectora bakarak pekı neden 192.168.49.2:32616 dedıgımızde ulasamıyoruzda port forward denılen şeyi uyguluyoruz yada  minikube kubernetes cluster olusuturken contaıner snaal makına yerıne VM sanal makına kullanırsan http://192.168.59.104:30578/ seklınde ulasabılrsın
+
+#anladıgın kadarıla  react podundan backend yanı posts poduna erişemedın ama post kodundan event bus poduna erısebılyıorsun Bu sorunu çözmek için arka uç sunucusunun istemciden erişilebilir olması gerekir. Bu, arka uç bölmesiyle ilişkili hizmeti bir LoadBalancer olarak değiştirerek veya bir giriş kullanarak yapılabilir ingress controller vs kullanbılrsın. bende de node port ile yapamadım onu daha cok tek bir podu başka pod ile iletişim iiçin vs denersın nodePort servisi BAK KULLANMAMAK ICIN BİR NEDEN
+
+# Bu hatayı yerel makineden alıyorsunuz çünkü ClusterIP hizmeti küme dışından erişim için yanlış türde. Kubernetes belgelerinde belirtildiği gibi ClusterIP'ye yalnızca küme içinden erişilebilir yanı aslında clıent podumuzda dışarı olarak kabul edılıyor.
+#şöyle birşey anladım react pod'u da ıcerde olarak anlayıp asında konusması lazım posts poduyla ama clıent'da gosterılen ıstekler dışardanmış tarayıcıdan atılıyor gibi oluyor dolayısıyla dışardan da post'a ulaşım olmadıgı ıcın sankı dışardan post koduna ulasıyormusuz gıbı oluyor ama bız aslında react podu ıcerde ve ıcerdekı başka pod ile konusmasını ıstedıgımız ıcın o da oyle davranmadıgı ıcın olmuyor. fakat gel gelelim bir post servisimizi dışarıya açsak ulasırız hatta post create endpointiyle post istegı atıpp event bus poduylada konusabılır cunku  o express uygulaması içerden 2 pod olarak birbirleryıle konusyorsun oluyor. react poduna dışardan ulaşıpp sıte ıcersınde query'e ıstek attıgında sankı dışardan istek atılıyormus gıbı react poduyla query podu ıcerden bırbırlerıyle konusuyormus gıbı olmuyor. maalesef araştırmalarına göre böyle onun ıcın node port kullanma react backend uygulamalarında.
+
+#genel olarak yenı laptop gelınce devam edersın haftaya yukardan 17.satırdan okumaya başlarsın sonra okuduktan sonra nerde kaldıgını anlıcaksın ve onları anlamıştın işte en son daha sonra  minikube start yaparsın cunku stopda daha sonra node port neden port forward ile calıstıgına bakmıstın gıne bakarsın ama yenı pc olcagı ıcın hyperv kullanırsın
+
+
+
