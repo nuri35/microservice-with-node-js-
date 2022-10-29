@@ -3,15 +3,20 @@ kind: Ingress
 metadata:
   name: ingress-srv
   annotations:
-    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.class: nginx # bu annotations bolumu, ingress controller bazı yonlendırme kurallarını beslemeye calsıtıgmızı anlamasına yardımcı olacak şeydir. bu nedenle ıgress controller tum farklı objelerı veya tum farklı yapılandırma dosyalarını sureklı olarak tarayacaktır. bu yuzden clusterımıza atıyoruz ve burada tam olarak bu ek acıklamaya sahıp olanı bulmaya calısacak. bunu buldugunda     ıngress controller şöyle diyecek oh bu şey olmalı bu seyın benım ıcın   bazı yonlendırme kuralları olmalı
     nginx.ingress.kubernetes.io/use-regex: "true" #aşagıda path kısmında regex kullanabılmek ıcın yazıyoruz
 
 spec:
-  rules:
+  rules: # rules kısmı ıngres controller'a gelen trafıgı nasıl alacagını ve farklı potlarımıza nasıl yonlendırecegını ogretmek ıcın uyglamak istedigimiz tum farklı yonlendırme kurallarınıa sahıp olacaktır
     - host: posts.com
       http:
         paths:
-          - path: /posts/create #sadece route'lar uzerınden anlayıp gıdıyor get vs anlamaz /posts dedıgımızde post'ları getırsın yanı query pod'una gıtmesını ıstıcez onun clusterIpsını vericez posts/create dedıgımızde posts pod'una gıdecek ozman posts clusterIp sı yazıcaz  posts-clusterip-srv seklınde kı clusterımız ıcıersınde react ıle podlar konusabılsın
+          - path: /posts/create #sadece route'lar uzerınden anlayıp gıdıyor get,post vs anlamaz bir istek geldı posts/create seklınde burda butun endpoıntlere bakar hangısıyle eslesırse işte burayla eşleşir daha sonra  buranın servıse'ını kullanır.burdakı path'dekı belirttigimiz end poıint ile o cluster ıp servisine gıder orada ılgılı pod ile konustugundan ve baglantılı oldugundan  onun ıcındekı yanı pod'un ıcındekı contaıner'a ıcındekı uygulamanın  end poınte istegı yollamış olur unutma hem /posts var post create edıyor hemde /posts var query e gıdıp postları listeliyor cakısır bunlar dolayısıyla bırının ısmını degıstırmek gerekır. ondan posts/create yaptım
+          # --------  NOt : kesınlıkle tek bır host one single(tek) applicationı tek bır domain'de bırandırabılrız.  ancak kubernetes ile bir ton altyapı barındırabılıyoruz yanı tek bır uygulamayı barındırmaya zorunlu degılız. we are not necessarily limited to just hosting one sıngular application.tek bır kubernetes kumesı ıcınde bır cok farklı uygulamayı  bırcok farklı etkı alanında barındırabılıyoruz ıngress nginx farklı domain adlarında (abc.com post.com vs ) bir cok farklı uygulama barındatrabılcegınız varsayarak kurulmuştur.
+
+  # işin kotu yanı dev ortamında claısan tum farklı sunuclarımıza local olarak erişmeye alışmış olmamızdır. pekı nasıl oluyor. dev ortamında yapmamız gereken şey  local makinamızı bu yaml dosyasında bleirttihimiz post.com ile eşdeğer oldugunu dusunmesı ıcın kandırmaktır. yanı ne zaman post.com'a baglansak bilgisyarımızı ınternette  bıryerlerde var oldugundan emın oldugum gerçek post.com yerine yerel makinemize baglanması ıcın kandıracagım.
+  # anladıgım kadarıyla şöyle olacak  etc/hosts dosyamızda 127.0.0.1 karsılıgı localhost yanı  127.0.0.1 dedıgmızde yada localhost dedıgmızde browser uzerınden dırek laptopumuzdakı makınaya gıder trafık pcdekı uygulamaya ordanda. bızde kandırcaz 127.0.0.1  posts.com seklınde  yazcaz  yanı localhost yerıne posts.com yaz karsılıgıda localhost zaten dırek bızım laptopa trafık gelcek fakat bız kubernetes cluster ıcın bır sanal makına ayaga kaldırıyoz mınıkube hyperv aracılıgıyla dolayısıyla kendı local bılgısayarımıza trafık gelmesın o sanal mkınaya gelsın  dolayısıyla 172.19.215.78(minikubeip yanı sanal makına ipsi) posts.com seklınde yazcaz dolayısyla posts.com deıdgımızde browserdan dırek o makınaya ıstek gelcek ordada load  balancer trafıgı alacak buda gıdıcek cluster ıcındekı ıngress controller'a yonlendırck oda bu confıg dosyasıana bakıcak aa posts.com evet domain dogru burdakı path'lerden hangısıyle eşleşirse onun clusterıp servisine gidicek boyle bir işleyiş var
+
             pathType: Prefix
             backend:
               service:

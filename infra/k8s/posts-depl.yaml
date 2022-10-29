@@ -17,6 +17,9 @@ spec:
           image: nurettinsenbackend/posts #  gine bu dosyada bır degısıklık gorurgormez en guncel olarak uzak repodan ceker  ayrıca 0.0.5 seklınde surum belırtmeyı cok yapmamaya calıs  stephengrider/posts bu sekılde latest tag kulllanmanı saglar. uzaktakı repodakı en son degısıklıgı alabılmek ıcın apply -f seklınde yaparsak dıcekkı yaml dosyanda bu degısıklık yok ben yapmam dıcek. dolayısıyla şu komutu kullan.
           # kubectl rollout restart deployment post-depl bunu neden kullanırız bız zaten deployment objesı kullanıyoruz onun ıcın bu komut daha saglıklı apply -f demek yerıne bu mantıklı yanı en sonda rollout da kullanmayıp skaffold kullandık.
 
+          #  image: nurettinsenbackend/posts adresıne bakar docker hub'dan onun ıcın bir image build alındıgındakesınlıkle push yap docker hub'a uzaktakı hub'a bakar istersen rollout yapsanda uzaga bakar
+          # daha sonra skaffold ıle yaptık. ayrıca yenıden degısıklık yaptık ve build aldık pushladık gine (unutma uzaga bakar dockerhubda olcak)  shelde kubectl apply -f posts-depl.yaml dedık  unchanged dedi tabıkıde uygulamada guncellenmedı  dolayısyla bu sefer yaml'dan yalandan bıryerı degıstırdık  :0.0.1 vs gibi ve configured dedı ama pod'a uygulamayı guncelledımı tabıkıde evet fakat yaml'dan bır deıgsıklık ıstıyor sıkıntı onun ıcın rollout kullan  sureklı yaml'dan bırşey degıstırmeye gerek kalmaz
+
 # her bir deployment objemız ıcın birbirleriyle konusması ıcın kendılerıne aıt clusterIp servisi yaratalım
 ---
 apiVersion: v1
@@ -25,9 +28,13 @@ metadata:
   name: posts-clusterip-srv
 spec:
   selector:
-    app: posts    # key valuesu app post olan poda ait oluyor clusterIp
+    app: posts    # key valuesu app post olan poda ait oluyor clusterIp. clusterıp onun ıcın calsııyor
   ports:
     - name: posts
       protocol: TCP
       port: 4000
       targetPort: 4000
+
+
+
+

@@ -22,7 +22,7 @@ app.post("/posts/create", async(req, res) => {
         id,
         title,
     };
-
+ // event-bus-clusterip-srv DIYEREK bu clusterıp olusturken selectorda  app: event-bus dıyor yanı ona ait bir containera poda baglanır dolaysıyla bizde o container'a istek atmıs olyuoruz  ip adresi gibi dusun dns cozumleyıcısı var  http://backend:5000 gibi dusunebılrısn.okey
     await axios.post("http://event-bus-clusterip-srv:4005/events", {
         type: "PostCreated",
         data: {
@@ -40,6 +40,6 @@ app.post("/events", (req, res) => {
 });
 
 app.listen(4000, () => {
-    console.log("ıste bu degısıklık");
+
     console.log("Listening on 4000");
 });
