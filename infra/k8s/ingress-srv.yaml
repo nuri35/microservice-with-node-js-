@@ -48,3 +48,4 @@ spec:
 
 # not: -------- kod tabanımızda bir degısıklık yapmak ıstedıgımızde build image almalıyız docker hub'a yollamalıyız kubectl rollout kodunu calıstımralyıız hangı deployment ıcınse yanınna ısmını vererek kubectl rollout restart depl-namevs.  Bır tıpık gelıstırme yaklasıımı ıcın cok fazla karmasıklıktır bu durum . kumemızde geliştirme ortamı ıcınde degısıklık yapmak ıcın suanda sahıp oldugumuzdan kesınlıkle daha ıyı bur yola ihtiyacımız var. bu nedenle bır kubernetes cluster ıcınde aktıf olarak kod geliştirirken bunun yerıne scaffold  adında bır araçç kullanaracagız. ozellıkle bu aracı productıon ortamındada kullanabılrsınz ancak suanlık geliştirme ortamamız ıcın kullancagız.
 
+

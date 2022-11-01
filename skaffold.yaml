@@ -8,21 +8,23 @@ build:
   local:
     push: false
   artifacts:
-    - image: nurettinsenbackend/client
-      context: client
+    - image: nurettinsenbackend/client 
+      context: client 
       docker:
-        dockerfile: Dockerfile
+        dockerfile: Dockerfile 
       sync:
         manual:
-          - src: "src/**/*.jsx"
+          - src: "src/**/*.jsx" 
             dest: "."
+
+          
     - image: nurettinsenbackend/comments
       context: comments
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "*.jsx"
+          - src: "*.js"
             dest: "."
     - image: nurettinsenbackend/event-bus
       context: event-bus
@@ -30,7 +32,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "*.jsx"
+          - src: "*.js"
             dest: "."
     - image: nurettinsenbackend/moderation
       context: moderation
@@ -38,7 +40,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "*.jsx"
+          - src: "*.js"
             dest: "."
     - image: nurettinsenbackend/posts
       context: posts
@@ -46,7 +48,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "*.jsx"
+          - src: "*.js"
             dest: "."
     - image: nurettinsenbackend/query
       context: query
@@ -54,5 +56,7 @@ build:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: "*.jsx"
+          - src: "*.js"
             dest: "."
+
+

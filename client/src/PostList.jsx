@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import CommentCreate from "./CommentCreate";
 import CommentList from "./CommentList";
-
+import { Button } from 'antd';
 const PostList = () => {
   const [posts, setPosts] = useState({});
 
@@ -23,6 +23,7 @@ const PostList = () => {
         style={{ width: "30%", marginBottom: "20px" }}
         key={post.id}
       >
+          <Button type="primary">Primary Button</Button>
         <div className="card-body">
           <h3>{post.title}</h3>
           <CommentList comments={post.comments} />
