@@ -16,6 +16,8 @@ const PostList = () => {
     fetchPosts();
   }, []);
 
+  //updated
+
   const renderedPosts = Object.values(posts).map((post) => {
     return (
       <div
